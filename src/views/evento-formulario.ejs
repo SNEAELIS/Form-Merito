@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Técnico - Evento</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Estilo Geral */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+/* Estilo das Abas como Pastas sobrepostas */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #005CAA; /* Linha de separação */
+    margin-bottom: 20px;
+    position: relative; /* Permite camadas de sobreposição */
+    z-index: 2;
+}
+
+.tabs button {
+    position: relative;
+    flex: 1;
+    padding: 12px 15px;
+    text-align: center;
+    background: linear-gradient(145deg, #f4f4f4, #e6e6e6); /* Efeito de gradiente */
+    color: #333;
+    border: 1px solid #ccc;
+    border-bottom: none; /* Remove a borda inferior para parecer conectado */
+    border-radius: 8px 8px 0 0; /* Bordas arredondadas no topo */
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar as abas */
+    z-index: 1; /* Aba inferior */
+}
+
+.tabs button:not(:last-child) {
+    margin-right: -5px; /* Sobreposição leve */
+}
+
+.tabs button.active {
+    background: #005CAA; /* Cor sólida para aba ativa */
+    color: white;
+    border: 1px solid #005CAA; /* Faz parecer que está conectada */
+    z-index: 2; /* Eleva a aba ativa acima das outras */
+    transform: translateY(-2px); /* Levanta a aba ativa levemente */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Sombra mais intensa para aba ativa */
+}
+
+/* Conteúdo da Aba */
+.tab-content {
+    display: none;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 0 8px 8px 8px; /* Bordas arredondadas apenas na parte inferior */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+}
+
+.tab-content.active {
+    display: block;
+    z-index: 1;
+}
+
+/* Adicionando um fundo abaixo das abas */
+.tabs::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(180deg, #e6e6e6, #ccc); /* Fundo para criar a ilusão de camadas */
+    z-index: 0; /* Enviar para trás */
+}
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button.submit-btn {
+            background: #005CAA;
+            color: white;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button.submit-btn:hover {
+            background: #003d80;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h2 class="header-title">Formulário Técnico - Evento</h2>
+    </header>
+    <div class="container">
+        <h1>Preencha as Informações do Evento</h1>
+
+        <!-- Abas -->
+        <div class="tabs">
+            <button class="tab-link active" data-tab="tab1">1. Identificação</button>
+            <button class="tab-link" data-tab="tab2">2. Localização</button>
+            <button class="tab-link" data-tab="tab3">3. Objeto</button>
+            <button class="tab-link" data-tab="tab4">4. Planejamento</button>
+            <button class="tab-link" data-tab="tab5">5. Materiais</button>
+            <button class="tab-link" data-tab="tab6">6. Divulgação</button>
+        </div>
+
+        <!-- Conteúdo das Abas -->
+        <form id="form-evento" action="/salvar-evento" method="POST">
+            <!-- Aba 1: Identificação -->
+            <div class="tab-content active" id="tab1">
+                <form id="formTab1">
+                    <!-- Identificação da Proponente -->
+                    <fieldset>
+                        <legend>1.1 Identificação da Proponente</legend>
+                        <label for="cnpjProponente">CNPJ da Proponente:</label>
+<input type="text" id="cnpjProponente" name="cnpjProponente" onblur="buscarDadosCNPJ()" placeholder="Digite o CNPJ">
+            
+                        <label for="nomeProponente">Nome da Proponente:</label>
+                        <input type="text" id="nomeProponente" name="nomeProponente" required>
+            
+                        <label for="nomeDirigente">Nome do Dirigente:</label>
+                        <input type="text" id="nomeDirigente" name="nomeDirigente" required>
+            
+                        <label for="telefoneDirigente">Telefone de Contato (DDD):</label>
+                        <input type="text" id="telefoneDirigente" name="telefoneDirigente" required>
+            
+                        <label for="emailDirigente">E-mail:</label>
+                        <input type="email" id="emailDirigente" name="emailDirigente" required>
+            
+                        <label for="proposalNumber">Número da Proposta:</label>
+                        <input type="text" id="proposalNumber" name="proposalNumber" required>
+                    </fieldset>
+            
+                    <!-- Responsável pela Elaboração -->
+                    <fieldset>
+                        <legend>1.2 Responsável pela Elaboração (Opcional)</legend>
+                        <label for="responsavelNome">Nome:</label>
+                        <input type="text" id="responsavelNome" name="responsavelNome">
+            
+                        <label for="responsavelEmail">E-mail:</label>
+                        <input type="email" id="responsavelEmail" name="responsavelEmail">
+            
+                        <label for="responsavelTelefone">Telefone de Contato (DDD):</label>
+                        <input type="text" id="responsavelTelefone" name="responsavelTelefone">
+                    </fieldset>
+            
+                    <!-- Dimensão do Projeto -->
+                    <fieldset>
+                        <legend>1.3 Dimensão do Projeto</legend>
+                        <!-- Formação Esportiva -->
+                        <label for="dimensaoFormacao">
+                            <input type="radio" id="dimensaoFormacao" name="dimensaoEvento" value="formacao" required>
+                            Formação Esportiva
+                        </label>
+                        <p class="dimensao-descricao">
+                            Oferta oportunidades de acesso à prática esportiva em suas diversas manifestações por meio de ações planejadas, inclusivas e lúdicas para crianças e adolescentes. Este nível de atendimento comporta os serviços de vivência, fundamentação, aprendizagem esportiva e fomento e difusão do conhecimento científico, tecnológico e de inovação.
+                        </p>
+            
+                        <!-- Esporte para toda vida -->
+                        <label for="dimensaoEsporteVida">
+                            <input type="radio" id="dimensaoEsporteVida" name="dimensaoEvento" value="esporte_vida" required>
+                            Esporte para toda vida
+                        </label>
+                        <p class="dimensao-descricao">
+                            Caracteriza-se pela vivência do esporte com autodeterminação a partir do conhecimento esportivo adquirido, pela transmissão pedagógica crítica e assumida dentre os hábitos culturais saudáveis ao longo da vida. Este nível abrange os serviços de esporte e lazer, atividade física, aprendizagem esportiva para crianças, jovens, adultos, idosos (esporte ao longo da vida), além do fomento e difusão do conhecimento científico, tecnológico e de inovação.
+                        </p>
+                    </fieldset>
+            
+                    <!-- Botão para salvar a aba -->
+                    <button type="button" onclick="saveTab('formTab1')">Salvar Identificação</button>
+                </form>
+            </div>
+
+            <!-- Aba 2: Localização -->
+            <div class="tab-content" id="tab2">
+                <label for="localizacao">Localização:</label>
+                <input type="text" id="localizacao" name="localizacao" required>
+
+                <label for="populacao">População:</label>
+                <input type="number" id="populacao" name="populacao" required>
+            </div>
+
+            <!-- Aba 3: Objeto -->
+            <div class="tab-content" id="tab3">
+                <label for="objeto">Objeto:</label>
+                <textarea id="objeto" name="objeto" rows="4" required></textarea>
+
+                <label for="justificativa">Justificativa:</label>
+                <textarea id="justificativa" name="justificativa" rows="4" required></textarea>
+            </div>
+
+            <!-- Aba 4: Planejamento -->
+            <div class="tab-content" id="tab4">
+                <label for="metodologia">Metodologia:</label>
+                <textarea id="metodologia" name="metodologia" rows="4" required></textarea>
+            </div>
+
+            <!-- Aba 5: Materiais -->
+            <div class="tab-content" id="tab5">
+                <label for="materiais">Lista de Materiais:</label>
+                <textarea id="materiais" name="materiais" rows="4" required></textarea>
+            </div>
+
+            <!-- Aba 6: Divulgação -->
+            <div class="tab-content" id="tab6">
+                <label for="divulgacao">Plano de Divulgação:</label>
+                <textarea id="divulgacao" name="divulgacao" rows="4" required></textarea>
+            </div>
+
+            <!-- Botão de Envio -->
+            <button type="submit" class="submit-btn">Salvar Evento</button>
+        </form>
+    </div>
+
+
+    <script>
+    //Validar CNPJ
+    function validarCNPJ(cnpj) {
+    cnpj = cnpj.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (cnpj.length !== 14) return false;
+
+    // Validação matemática básica
+    let tamanho = cnpj.length - 2;
+    let numeros = cnpj.substring(0, tamanho);
+    let digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+
+    for (let i = tamanho; i >= 1; i--) {
+        soma += numeros.charAt(tamanho - i) * pos--;
+        if (pos < 2) pos = 9;
+    }
+
+    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(0)) return false;
+
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+
+    for (let i = tamanho; i >= 1; i--) {
+        soma += numeros.charAt(tamanho - i) * pos--;
+        if (pos < 2) pos = 9;
+    }
+
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    return resultado == digitos.charAt(1);
+}
+    //Consultar CNPJ
+    async function buscarDadosCNPJ() {
+    const cnpjInput = document.getElementById('cnpjProponente').value.replace(/\D/g, ''); // Remove pontuações
+
+    if (!cnpjInput || cnpjInput.length !== 14) {
+        alert('Por favor, insira um CNPJ válido.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/consultar-cnpj/${cnpjInput}`);
+        if (!response.ok) throw new Error('CNPJ não encontrado');
+
+        const dados = await response.json();
+
+        // Preenchendo os campos com os dados retornados pela API
+        document.getElementById('nomeProponente').value = dados.nome || 'Nome não disponível';
+        document.getElementById('telefoneDirigente').value = dados.telefone || 'Telefone não disponível';
+        document.getElementById('emailDirigente').value = dados.email || 'E-mail não disponível';
+
+        // Preenchendo o nome do dirigente a partir do quadro societário
+        const dirigente = dados.qsa?.find(pessoa => pessoa.qual.includes('Presidente') || pessoa.qual.includes('Responsável'));
+        document.getElementById('nomeDirigente').value = dirigente?.nome || 'Dirigente não disponível';
+
+        alert('Informações preenchidas com sucesso!');
+    } catch (error) {
+        console.error('Erro ao buscar CNPJ:', error);
+        alert('Não foi possível encontrar informações para este CNPJ.');
+    }
+}
+    // Politica de Privacidade 
+    function showInfo(type) {
+    const modal = document.getElementById('infoModal');
+    const modalText = document.getElementById('modal-text');
+
+    if (type === 'privacidade') {
+        modalText.innerHTML = `
+            <h2>Política de Privacidade</h2>
+            <p>Esta política descreve como seus dados são coletados, usados e protegidos de acordo com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018).</p>
+            <ul>
+                <li>Seus dados serão usados apenas para os fins informados e consentidos.</li>
+                <li>Você tem o direito de acessar, corrigir ou excluir suas informações pessoais.</li>
+                <li>Os dados coletados estão protegidos por medidas de segurança avançadas.</li>
+            </ul>
+        `;
+    } else if (type === 'termos') {
+        modalText.innerHTML = `
+            <h2>Termos de Uso</h2>
+            <p>Os termos de uso regulam o acesso e a utilização deste sistema, conforme as leis vigentes:</p>
+            <ul>
+                <li>O uso deste sistema implica a aceitação dos termos descritos aqui.</li>
+                <li>Você é responsável por manter a confidencialidade de suas credenciais de acesso.</li>
+                <li>É proibido o uso do sistema para fins ilegais ou não autorizados.</li>
+            </ul>
+        `;
+    }
+
+    modal.classList.remove('hidden');
+    modal.style.display = 'block';
+}
+
+// Função para fechar o modal
+function closeModal() {
+    const modal = document.getElementById('infoModal');
+    modal.style.display = 'none';
+}
+        // Alternar abas
+        const tabLinks = document.querySelectorAll('.tab-link');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                tabLinks.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                link.classList.add('active');
+                document.getElementById(link.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+<footer class="footer">
+    <p>&copy; 2024 Ministério do Esporte. Todos os direitos reservados.</p>
+    <p>
+        <a href="#" class="footer-link" onclick="showInfo('privacidade')">Política de Privacidade</a> |
+        <a href="#" class="footer-link" onclick="showInfo('termos')">Termos de Uso</a>
+    </p>
+</footer>
+</html>

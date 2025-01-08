@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Técnico - Projeto/Evento</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <h2 class="header-title">Ministério do Esporte</h2>
+        <img src="/img/Imagem1.png" alt="Logo" class="header-logo">
+    </header>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <div class="container1">
+            <h1 class="main-title">Formulário Técnico - Projeto ou Evento</h1>
+            <p>Escolha uma das opções abaixo para continuar:</p>
+            <button class="btn-primary" onclick="window.location.href = '/projeto-formulario';">Projeto</button>
+            <button class="btn-secondary" onclick="window.location.href='/evento-formulario';">Evento</button>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <p>&copy; 2024 Ministério do Esporte. Todos os direitos reservados.</p>
+        <p>
+            <a href="#" class="footer-link" onclick="showInfo('privacidade')">Política de Privacidade</a> |
+            <a href="#" class="footer-link" onclick="showInfo('termos')">Termos de Uso</a>
+        </p>
+    </footer>
+
+    <!-- Modal para exibir as informações -->
+    <div id="infoModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+                <div id="modal-text">
+            <!-- O conteúdo será preenchido dinamicamente -->
+        </div>
+    </div>
+</body>
+<script>
+    // Função para exibir informações
+function showInfo(type) {
+    const modal = document.getElementById('infoModal');
+    const modalText = document.getElementById('modal-text');
+
+    if (type === 'privacidade') {
+        modalText.innerHTML = `
+            <h2>Política de Privacidade</h2>
+            <p>Esta política descreve como seus dados são coletados, usados e protegidos de acordo com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018).</p>
+            <ul>
+                <li>Seus dados serão usados apenas para os fins informados e consentidos.</li>
+                <li>Você tem o direito de acessar, corrigir ou excluir suas informações pessoais.</li>
+                <li>Os dados coletados estão protegidos por medidas de segurança avançadas.</li>
+            </ul>
+        `;
+    } else if (type === 'termos') {
+        modalText.innerHTML = `
+            <h2>Termos de Uso</h2>
+            <p>Os termos de uso regulam o acesso e a utilização deste sistema, conforme as leis vigentes:</p>
+            <ul>
+                <li>O uso deste sistema implica a aceitação dos termos descritos aqui.</li>
+                <li>Você é responsável por manter a confidencialidade de suas credenciais de acesso.</li>
+                <li>É proibido o uso do sistema para fins ilegais ou não autorizados.</li>
+            </ul>
+        `;
+    }
+
+    modal.classList.remove('hidden');
+    modal.style.display = 'block';
+}
+
+// Função para fechar o modal
+function closeModal() {
+    const modal = document.getElementById('infoModal');
+    modal.style.display = 'none';
+}
+</script>
+</html>
