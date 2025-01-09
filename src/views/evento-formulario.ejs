@@ -141,6 +141,8 @@
             <button class="tab-link" data-tab="tab6">6. Divulgação</button>
         </div>
 
+        <input type="text" id="proposalSearch" placeholder="Digite o número da proposta">
+<button type="button" onclick="carregarEvento(document.getElementById('proposalSearch').value)">Carregar Evento</button>
         <!-- Conteúdo das Abas -->
         <form id="form-evento" action="/salvar-evento" method="POST">
             <!-- Aba 1: Identificação -->
@@ -150,7 +152,7 @@
                     <fieldset>
                         <legend>1.1 Identificação da Proponente</legend>
                         <label for="cnpjProponente">CNPJ da Proponente:</label>
-<input type="text" id="cnpjProponente" name="cnpjProponente" onblur="buscarDadosCNPJ()" placeholder="Digite o CNPJ">
+            <input type="text" id="cnpjProponente" name="cnpjProponente" onblur="buscarDadosCNPJ()" placeholder="Digite o CNPJ">
             
                         <label for="nomeProponente">Nome da Proponente:</label>
                         <input type="text" id="nomeProponente" name="nomeProponente" required>
@@ -208,14 +210,104 @@
                 </form>
             </div>
 
-            <!-- Aba 2: Localização -->
-            <div class="tab-content" id="tab2">
-                <label for="localizacao">Localização:</label>
-                <input type="text" id="localizacao" name="localizacao" required>
+<!-- Aba 2: Localização e Outras Informações -->
+<div class="tab-content" id="tab2">
+    <h3>2. Localização</h3>
+    <form id="formTab2">
+        <!-- Seleção de Município e Estado -->
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado" onchange="fetchMunicipios(this.value)" required>
+            <option value="" disabled selected>Selecione um estado</option>
+            <!-- Opções serão populadas dinamicamente -->
+        </select>
 
-                <label for="populacao">População:</label>
-                <input type="number" id="populacao" name="populacao" required>
-            </div>
+        <label for="municipio">Município:</label>
+        <select id="municipio" name="municipio" onchange="fetchDadosMunicipio(this.value)" required>
+            <option value="" disabled selected>Selecione um município</option>
+            <!-- Opções serão populadas dinamicamente -->
+        </select>
+
+        <!-- Campos de IDH -->
+        <label for="idh">IDH:</label>
+        <input type="text" id="idh" name="idh" required>
+
+        <label for="idhFonte">Fonte:</label>
+        <input type="text" id="idhFonte" name="idhFonte" required>
+
+        <label for="idhAno">Ano de Referência:</label>
+        <input type="number" id="idhAno" name="idhAno" required>
+
+        <!-- Campos de População -->
+        <label for="numeroHabitantes">Número de Habitantes:</label>
+        <input type="number" id="numeroHabitantes" name="numeroHabitantes" required>
+
+        <label for="habitantesFonte">Fonte:</label>
+        <input type="text" id="habitantesFonte" name="habitantesFonte" required>
+
+        <label for="habitantesAno">Ano de Referência:</label>
+        <input type="number" id="habitantesAno" name="habitantesAno" required>
+
+        <!-- Seção de Entidade -->
+        <h3>1.6 Entidade</h3>
+        <label>A Entidade já celebrou parceria com o Ministério?</label>
+        <label for="parceriaSim">
+            <input type="radio" id="parceriaSim" name="parceriaMinisterio" value="sim" required>
+            Sim
+        </label>
+        <label for="parceriaNao">
+            <input type="radio" id="parceriaNao" name="parceriaMinisterio" value="nao" required>
+            Não
+        </label>
+        <label for="numeroParcerias">Número de Parcerias:</label>
+        <input type="number" id="numeroParcerias" name="numeroParcerias">
+        <label for="resultadosParcerias">Resultados das Parcerias:</label>
+        <textarea id="resultadosParcerias" name="resultadosParcerias"></textarea>
+
+        <!-- Seção de Entidades Parceiras -->
+        <h3>1.7 Entidades Parceiras</h3>
+        <label for="entidadeNome">Nome:</label>
+        <input type="text" id="entidadeNome" name="entidadeNome" required>
+        <label for="entidadeEmail">E-mail:</label>
+        <input type="email" id="entidadeEmail" name="entidadeEmail" required>
+        <label for="entidadeTelefone">Telefone:</label>
+        <input type="text" id="entidadeTelefone" name="entidadeTelefone" required>
+        <label for="entidadeEndereco">Endereço:</label>
+        <input type="text" id="entidadeEndereco" name="entidadeEndereco" required>
+        <label for="entidadeMunicipio">Município:</label>
+        <input type="text" id="entidadeMunicipio" name="entidadeMunicipio" required>
+        <label for="entidadeUF">UF:</label>
+        <input type="text" id="entidadeUF" name="entidadeUF" required>
+        <label for="entidadeCEP">CEP:</label>
+        <input type="text" id="entidadeCEP" name="entidadeCEP" required>
+        <label for="contribuicaoEntidade">Contribuição:</label>
+        <textarea id="contribuicaoEntidade" name="contribuicaoEntidade"></textarea>
+
+        <!-- Seção de Coordenador -->
+        <h3>1.8 Coordenador</h3>
+        <label for="coordenadorNome">Nome:</label>
+        <input type="text" id="coordenadorNome" name="coordenadorNome" required>
+        <label for="coordenadorEmail">E-mail:</label>
+        <input type="email" id="coordenadorEmail" name="coordenadorEmail" required>
+        <label for="coordenadorTelefone">Telefone:</label>
+        <input type="text" id="coordenadorTelefone" name="coordenadorTelefone" required>
+
+        <!-- Seção de Capacidade Técnica -->
+        <h3>1.9 Capacidade Técnica</h3>
+        <label>Capacidade Técnica:</label>
+        <label for="capacidadeSim">
+            <input type="radio" id="capacidadeSim" name="capacidadeTecnica" value="sim" required>
+            Sim
+        </label>
+        <label for="capacidadeNao">
+            <input type="radio" id="capacidadeNao" name="capacidadeTecnica" value="nao" required>
+            Não
+        </label>
+        <label for="historicoCapacidade">Histórico:</label>
+        <textarea id="historicoCapacidade" name="historicoCapacidade"></textarea>
+
+        <button type="button" onclick="saveTab('formTab2')">Salvar</button>
+    </form>
+</div>
 
             <!-- Aba 3: Objeto -->
             <div class="tab-content" id="tab3">
@@ -245,12 +337,26 @@
             </div>
 
             <!-- Botão de Envio -->
-            <button type="submit" class="submit-btn">Salvar Evento</button>
+<!-- Botão de Envio -->
+            <button type="button" class="submit-btn" onclick="salvarEvento()">Salvar Evento</button>
+            <button type="button" class="submit-btn" onclick="gerarPDF()">Gerar PDF</button>
+
         </form>
     </div>
 
 
     <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const button = document.querySelector('button');
+        button.addEventListener('click', () => {
+            const proposalNumber = document.getElementById('proposalSearch')?.value;
+            if (proposalNumber) {
+                carregarEvento(proposalNumber);
+            } else {
+                alert('Por favor, insira um número da proposta.');
+            }
+        });
+    });
     //Validar CNPJ
     function validarCNPJ(cnpj) {
     cnpj = cnpj.replace(/\D/g, ''); // Remove caracteres não numéricos
@@ -345,31 +451,198 @@
     modal.style.display = 'block';
 }
 
-// Função para fechar o modal
-function closeModal() {
-    const modal = document.getElementById('infoModal');
-    modal.style.display = 'none';
-}
-        // Alternar abas
-        const tabLinks = document.querySelectorAll('.tab-link');
-        const tabContents = document.querySelectorAll('.tab-content');
+async function salvarEvento() {
+    const form = document.getElementById('form-evento');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
-        tabLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                tabLinks.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-
-                link.classList.add('active');
-                document.getElementById(link.dataset.tab).classList.add('active');
-            });
+    try {
+        const response = await fetch('/salvar-evento', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
         });
+
+        if (response.ok) {
+            alert('Evento salvo com sucesso!');
+        } else {
+            const errorText = await response.text();
+            alert(`Erro ao salvar o evento: ${errorText}`);
+        }
+    } catch (error) {
+        console.error('Erro ao salvar o evento:', error);
+        alert('Erro ao salvar o evento.');
+    }
+}
+
+function carregarEvento(proposalNumber) {
+    if (!proposalNumber) {
+        alert('Número da proposta é obrigatório.');
+        return;
+    }
+
+    fetch(`/carregar-evento/${proposalNumber}`)
+        .then(response => {
+            if (!response.ok) throw new Error('Evento não encontrado.');
+            return response.json();
+        })
+        .then(data => {
+            Object.entries(data).forEach(([key, value]) => {
+                const input = document.getElementById(key);
+                if (input) input.value = value;
+            });
+            alert('Evento carregado com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar evento:', error);
+            alert('Erro ao carregar o evento.');
+        });
+}
+
+async function gerarPDF() {
+    const form = document.getElementById('form-evento');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const response = await fetch('/gerar-pdf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `PTP_${data.proposalNumber || 'evento'}.pdf`;
+            a.click();
+            URL.revokeObjectURL(url);
+        } else {
+            const errorText = await response.text();
+            alert(`Erro ao gerar o PDF: ${errorText}`);
+        }
+    } catch (error) {
+        console.error('Erro ao gerar o PDF:', error);
+        alert('Erro ao gerar o PDF.');
+    }
+}
+
+// Alternar abas
+const tabLinks = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            // Remover classes "active" de todas as abas e conteúdos
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Adicionar "active" à aba clicada e ao conteúdo correspondente
+            link.classList.add('active');
+            const tabId = link.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+    // Função para carregar estados ao carregar a página
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados") // API para buscar estados
+            .then(response => response.json())
+            .then(data => {
+                const estadoSelect = document.getElementById('estado');
+                data.forEach(estado => {
+                    const option = document.createElement('option');
+                    option.value = estado.id; // Código do estado
+                    option.textContent = estado.nome; // Nome do estado
+                    estadoSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar estados:', error));
+    });
+
+    // Função para buscar municípios com base no estado selecionado
+    function fetchMunicipios(estadoId) {
+        fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`) // API para municípios
+            .then(response => response.json())
+            .then(data => {
+                const municipioSelect = document.getElementById('municipio');
+                municipioSelect.innerHTML = '<option value="" disabled selected>Selecione um município</option>';
+                data.forEach(municipio => {
+                    const option = document.createElement('option');
+                    option.value = municipio.id; // Código do município
+                    option.textContent = municipio.nome; // Nome do município
+                    municipioSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar municípios:', error));
+    }
+    fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+    .then(response => response.json())
+    .then(data => {
+        console.log("Estados carregados:", data); // Log para verificar
+        // Resto do código...
+    })
+    .catch(error => console.error('Erro ao buscar estados:', error));
+            function fetchDadosMunicipio(municipioCodigo) {
+            console.log("Código do município enviado:", municipioCodigo); // Verificar valor do município
+
+            fetch(`https://api.dadosmunicipais.gov.br/municipios/${municipioCodigo}`) // Verifique se o endpoint está correto
+                .then(response => {
+                    console.log("Status da resposta:", response.status); // Verificar status da resposta
+                    if (!response.ok) {
+                        throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Dados retornados do município:", data); // Verificar dados no console
+
+                    // Preenchendo os campos com os dados
+                    document.getElementById('idh').value = data.idh || "Não disponível";
+                    document.getElementById('idhFonte').value = data.fonteIDH || "Não disponível";
+                    document.getElementById('idhAno').value = data.anoIDH || "";
+
+                    document.getElementById('numeroHabitantes').value = data.populacao || "";
+                    document.getElementById('habitantesFonte').value = data.fontePopulacao || "Não disponível";
+                    document.getElementById('habitantesAno').value = data.anoPopulacao || "";
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados do município:', error);
+                    alert("Erro ao buscar dados do município. Verifique sua conexão ou tente novamente.");
+                });
+        }
+        function fetchDadosMunicipio(municipioCodigo) {
+    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/municipios/${municipioCodigo}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erro ao buscar dados do município");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Dados retornados do município:", data);
+
+            // Atualize os campos conforme necessário
+            document.getElementById('idh').value = data.idh || "Não disponível";
+            document.getElementById('idhFonte').value = data.fonte || "Não disponível";
+            document.getElementById('idhAno').value = data.anoReferencia || "Não disponível";
+            document.getElementById('numeroHabitantes').value = data.populacao || "Não disponível";
+            document.getElementById('habitantesFonte').value = data.fontePopulacao || "Não disponível";
+            document.getElementById('habitantesAno').value = data.anoPopulacao || "Não disponível";
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados do município:', error);
+            alert("Erro ao buscar dados do município. Verifique sua conexão ou tente novamente.");
+        });
+}
     </script>
 </body>
 <footer class="footer">
     <p>&copy; 2024 Ministério do Esporte. Todos os direitos reservados.</p>
     <p>
         <a href="#" class="footer-link" onclick="showInfo('privacidade')">Política de Privacidade</a> |
-        <a href="#" class="footer-link" onclick="showInfo('termos')">Termos de Uso</a>
+            <a href="#" class="footer-link" onclick="showInfo('termos')">Termos de Uso</a>
     </p>
 </footer>
 </html>
