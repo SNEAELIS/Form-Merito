@@ -455,10 +455,10 @@
 </head>
 <body>
     <header class="header">
-        <h2 class="header-title">Formulário Técnico - Projeto</h2>
+        <h2 class="header-title">Formulário Técnico - Evento</h2>
     </header>
     <div class="container">
-        <h1>Preencha as Informações do Projeto</h1>
+        <h1>Preencha as Informações do Evento</h1>
 
         <!-- Abas -->
         <div class="tabs">
@@ -640,60 +640,174 @@
 
             <!-- Aba 3: Objeto -->
             <div class="tab-content" id="tab3">
-                  <!-- Botão de Ajuda -->
+                  
+                <style>
+                    /* Estilo geral */
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 20px;
+                        background-color: #f9f9f9;
+                        color: #333;
+                    }
+            
+                    .container {
+                        max-width: 800px;
+                        margin: auto;
+                        padding: 20px;
+                        background-color: white;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        border: 1px solid #ddd;
+                    }
+            
+                    h2 {
+                        background-color: #005CAA;
+                        color: white;
+                        padding: 10px 15px;
+                        border-radius: 5px;
+                        font-size: 18px;
+                        margin-bottom: 15px;
+                    }
+            
+                    .form-section {
+                        margin-bottom: 30px;
+                    }
+            
+                    .form-section h3 {
+                        font-size: 16px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                    }
+            
+                    .form-section p {
+                        margin-bottom: 10px;
+                        line-height: 1.5;
+                    }
+            
+                    .form-section .help-text {
+                        color: #e60000;
+                        cursor: pointer;
+                        font-size: 14px;
+                        text-decoration: underline;
+                        position: relative;
+                        display: inline-block;
+                    }
+            
+                    .form-section .help-text:hover {
+                        color: #b30000;
+                    }
+            
+                    .tooltip {
+                        visibility: hidden;
+                        width: 350px;
+                        background-color: #333;
+                        color: white;
+                        text-align: left;
+                        padding: 10px;
+                        border-radius: 5px;
+                        position: absolute;
+                        z-index: 1;
+                        bottom: 120%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        opacity: 0;
+                        transition: opacity 0.3s;
+                    }
+            
+                    .tooltip::after {
+                        content: '';
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        border-width: 6px;
+                        border-style: solid;
+                        border-color: #333 transparent transparent transparent;
+                    }
+            
+                    .form-section .help-text:hover .tooltip {
+                        visibility: visible;
+                        opacity: 1;
+                    }
+            
+                    .input-field {
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        background-color: white;
+                        font-size: 14px;
+                        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+                        margin-top: 10px;
+                    }
+            
+                    .input-field.textarea {
+                        height: 100px;
+                        resize: vertical;
+                    }
+            
+                    .divider {
+                        margin: 30px 0;
+                        border-top: 1px solid #ddd;
+                    }
+            
+                    /* Responsividade */
+                    @media (max-width: 600px) {
+                        h2 {
+                            font-size: 16px;
+                        }
+            
+                        .tooltip {
+                            width: 280px;
+                        }
+                    }
+                </style>
+                
+                
+                <!-- Botão de Ajuda -->
 
                 
 
                 <label for="objeto">Objeto:</label>
-                <span class="info-icon">
-                    ?
-                    <span class="tooltip">Descrever objetivamente o Projeto de apoio às ações educacionais, indígenas, esportivas ou de lazer que serão desenvolvidas.
-
-                                          Ex: Implementação e Desenvolvimento do Projeto XXX, no Município/Estado de XXXXXX/XX.
+                <h3>2.4 Objetivo Geral</h3>
+                <p>O objetivo geral deve ser descrito em uma única frase, apresentando claramente as ações a serem desenvolvidas (O quê? Como? Para quê?).</p>
+                <p class="help-text">
+                    Obs: O objetivo deverá começar com o verbo no infinitivo
+                    <span class="tooltip">
+                        Utilize um verbo no infinitivo (ex.: "Promover", "Desenvolver", "Fortalecer") e descreva a ação principal de forma clara e objetiva.
                     </span>
-                </span>
-                <textarea id="objeto" name="objeto" rows="4" required></textarea>
-
-
+                </p>
+                <textarea class="input-field textarea" placeholder="Digite o objetivo geral do projeto..."></textarea>
+            </div>
     
-
-
-                <label for="justificativa">Objetivo Geral:</label>
-                <span class="info-icon">
-                    ?
-                    <span class="tooltip">Descrever objetivamente o Projeto de apoio às ações educacionais, indígenas, esportivas ou de lazer que serão desenvolvidas.
-
-                                          Ex: Implementação e Desenvolvimento do Projeto XXX, no Município/Estado de XXXXXX/XX.
+            <div class="divider"></div>
+    
+            <!-- Objetivos Específicos -->
+            <div class="form-section">
+                <h3>2.5 Objetivos Específicos</h3>
+                <p>Os objetivos específicos referem-se às etapas intermediárias que deverão ser cumpridas no curso do Projeto. Devem estar necessariamente vinculados ao objetivo geral.</p>
+                <p class="help-text">
+                    Saiba mais
+                    <span class="tooltip">
+                        Detalhe os objetivos intermediários que contribuem diretamente para o alcance do objetivo geral. Cada etapa deve ser clara e mensurável.
                     </span>
-                </span>
-                <textarea id="objetoGeral" name="objetoGeral" rows="4" required></textarea>
-
-
-
-
-
-                <label for="justificativa">Objetivos Específicos:</label>
-                <span class="info-icon">
-                    ?
-                    <span class="tooltip">Descrever objetivamente o Projeto de apoio às ações educacionais, indígenas, esportivas ou de lazer que serão desenvolvidas.
-
-                                          Ex: Implementação e Desenvolvimento do Projeto XXX, no Município/Estado de XXXXXX/XX.
+                </p>
+                <textarea class="input-field textarea" placeholder="Digite os objetivos específicos do projeto..."></textarea>
+            </div>
+    
+            <div class="divider"></div>
+    
+            <!-- Metodologia do Projeto -->
+            <div class="form-section">
+                <h3>3.1 Metodologia do Projeto</h3>
+                <p>Descrever, de forma minuciosa, como será realizado o projeto (modalidade, número de participantes – total e por modalidade, a maneira como será ofertada, incluindo procedimentos, técnicas e instrumentos a serem empregados).</p>
+                <p class="help-text">
+                    Obs: Deve haver relação entre atividades e a lista de material
+                    <span class="tooltip">
+                        A metodologia deve detalhar todos os aspectos operacionais do projeto, relacionando claramente as atividades a serem realizadas com os materiais necessários para sua execução.
                     </span>
-                </span>
-                <textarea id="objetoEspecifico" name="objetoEspecifico" rows="4" required></textarea>
-
-
-
-                <label for="justificativa">Justificativa:</label>
-                <span class="info-icon">
-                    ?
-                    <span class="tooltip">Descrever objetivamente o Projeto de apoio às ações educacionais, indígenas, esportivas ou de lazer que serão desenvolvidas.
-
-                                          Ex: Implementação e Desenvolvimento do Projeto XXX, no Município/Estado de XXXXXX/XX.
-                    </span>
-                </span>
-                <textarea id="justificativa" name="justificativa" rows="4" required></textarea>
-            
+                </p>
+                <textarea class="input-field textarea" placeholder="Descreva a metodologia detalhada do projeto..."></textarea>
             
             
             </div>
@@ -1397,7 +1511,7 @@
 
             <!-- Botão de Envio -->
 <!-- Botão de Envio -->
-            <button type="button" class="submit-btn" onclick="salvarEvento()">Salvar Projeto</button>
+            <button type="button" class="submit-btn" onclick="salvarEvento()">Salvar Evento</button>
             <button type="button" class="submit-btn" onclick="gerarPDF()">Gerar PDF</button>
 
         </form>
