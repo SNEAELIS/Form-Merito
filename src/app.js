@@ -128,6 +128,13 @@ app.post('/gerar-pdf', (req, res) => {
     }
 });
 
+// Rota para o formulário de projeto
+app.get('/projeto-formulario', (req, res) => {
+  console.log('A rota /projeto-formulario foi acessada');
+  res.render('projeto-formulario');
+});
+
+
 // Rota para a página inicial
 app.get('/', (req, res) => {
     res.render('index');
