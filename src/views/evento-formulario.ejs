@@ -474,6 +474,16 @@ async function salvarEvento() {
         alert('Erro ao salvar o evento.');
     }
 }
+function saveTab(formId) {
+    const form = document.getElementById(formId);
+    if (!form) {
+        console.error(`Formulário com ID ${formId} não encontrado.`);
+        return;
+    }
+    const data = new FormData(form);
+    console.log("Dados salvos:", Object.fromEntries(data.entries()));
+    alert("Dados salvos!");
+}
 
 function carregarEvento(proposalNumber) {
     if (!proposalNumber) {
@@ -504,8 +514,13 @@ async function gerarPDF() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
+    if (!data.proposalNumber) {
+        alert('Número da Proposta é obrigatório.');
+        return;
+    }
+
     try {
-        const response = await fetch('/gerar-pdf', {
+        const response = await fetch('http://localhost:3001/gerar-pdf', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
@@ -514,9 +529,11 @@ async function gerarPDF() {
         if (response.ok) {
             const blob = await response.blob();
             const url = URL.createObjectURL(blob);
+
+            // Criar link para download
             const a = document.createElement('a');
             a.href = url;
-            a.download = `PTP_${data.proposalNumber || 'evento'}.pdf`;
+            a.download = `PTP_${data.proposalNumber}.pdf`;
             a.click();
             URL.revokeObjectURL(url);
         } else {
@@ -525,10 +542,9 @@ async function gerarPDF() {
         }
     } catch (error) {
         console.error('Erro ao gerar o PDF:', error);
-        alert('Erro ao gerar o PDF.');
+        alert('Erro ao gerar o PDF. Verifique sua conexão ou o servidor.');
     }
 }
-
 // Alternar abas
 const tabLinks = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
